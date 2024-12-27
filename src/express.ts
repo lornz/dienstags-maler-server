@@ -35,6 +35,12 @@ app.post('/submit-image', (req, res) => {
     }
 });
 
+
+app.post('new-session', (req, res) => {
+    console.log('new session');
+    const { sesssionName, guessWord } = req.body;
+});
+
 // Catch-all route for unmatched requests
 app.use((req, res) => {
     res.status(404).send({ message: 'Endpoint not found.' });
