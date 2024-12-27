@@ -43,15 +43,21 @@ app.post('/submit-image', (req, res) => {
 
 app.post('/new-session', (req, res) => {
     const { sesssionName, player } = req.body;
+
+    // Create new session or join existing one
     console.log('create new session with name:', sesssionName, 'with player:', player);
     const session = createOrJoinSession(sesssionName, player);
 
-    axios.post('https://montagsmaler-multiplayer.onrender.com/set_task', session.task ).then(response => {
+    // Set task for player
+    axios.post('https://montagsmaler-multiplayer.onrender.com/set_task', { task: session.task} ).then(response => {
         console.log('Posted /set_task. Response:', response.data);
     })
     .catch(error => {
         console.error('Error posting to /set_task:', error);
     });
+
+    if (session.players?.length > 1) {
+    }
 });
 
 // Catch-all route for unmatched requests
