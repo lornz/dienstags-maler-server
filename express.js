@@ -6,24 +6,18 @@ const PORT = process.env.PORT || 3000; // Use PORT from the environment or defau
 app.use(json());
 
 // Endpoint to handle name submission
-app.post('/submit-name', (req, res) => {
-    const { name } = req.body;
-
-    if (name) {
-        console.log(`Received name: ${name}`);
-        res.status(200).send({ message: 'Name logged successfully!' });
-    } else {
-        res.status(400).send({ message: 'Name is required.' });
-    }
-});
-
-// Endpoint to handle name submission
 app.post('/submit-image', (req, res) => {
     const { name, image } = req.body;
 
     if (name) {
-        console.log(`Received name: ${name} and ${image}`);
+        console.log(`Received name: ${name} and an image`);
         res.status(200).send({ message: 'Name and image logged successfully!' });
+
+
+        getGroqChatCompletion(image).then((chatCompletion) => {
+            console.log('got completion');
+            console.log(chatCompletion.choices[0]?.message?.content);
+        });
     } else {
         res.status(400).send({ message: 'Name is required.' });
     }
