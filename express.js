@@ -23,7 +23,7 @@ app.post('/submit-image', (req, res) => {
 
     if (name) {
         console.log(`Received name: ${name} and ${image}`);
-        res.status(200).send({ message: 'Name logged successfully!' });
+        res.status(200).send({ message: 'Name and image logged successfully!' });
     } else {
         res.status(400).send({ message: 'Name is required.' });
     }
