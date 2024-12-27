@@ -30,10 +30,10 @@ app.post('/submit-image', (req, res) => {
             // Post to https://montagsmaler-multiplayer.onrender.com/update_answer
             axios.post('https://montagsmaler-multiplayer.onrender.com/update_answer', { content })
             .then(response => {
-                console.log('Posted to montagsmaler-multiplayer:', response.data);
+                console.log('Posted to /update_answer:', response.data);
             })
             .catch(error => {
-                console.error('Error posting to montagsmaler-multiplayer:', error);
+                console.error('Error posting to /update_answer:', error);
             });
         });
     } else {
@@ -46,7 +46,12 @@ app.post('/new-session', (req, res) => {
     console.log('create new session with name:', sesssionName, 'with player:', player);
     const session = createOrJoinSession(sesssionName, player);
 
-    axios.post('https://montagsmaler-multiplayer.onrender.com/set_task', session.task )
+    axios.post('https://montagsmaler-multiplayer.onrender.com/set_task', session.task ).then(response => {
+        console.log('Posted /set_task. Response:', response.data);
+    })
+    .catch(error => {
+        console.error('Error posting to /set_task:', error);
+    });
 });
 
 // Catch-all route for unmatched requests
