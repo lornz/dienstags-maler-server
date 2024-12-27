@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { getGroqChatCompletion } from './groq';
+import { getGroqChatCompletion } from './groq.js';
 const app = express();
 const PORT = process.env.PORT || 3000; // Use PORT from the environment or default to 3000
 

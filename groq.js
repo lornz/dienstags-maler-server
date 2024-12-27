@@ -28,5 +28,3 @@ export async function getGroqChatCompletion(base64Image) {
       model: "llama-3.2-11b-vision-preview",
   });
 }
-
-main();
