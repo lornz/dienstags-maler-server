@@ -57,6 +57,7 @@ app.post('/new-session', (req, res) => {
     });
 
     if (session.players?.length > 1) {
+        console.log('Session is full. Starting game...');
     }
 });
 
