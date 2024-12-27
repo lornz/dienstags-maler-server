@@ -1,8 +1,7 @@
 {
   "scripts": {
-    "start": "npm run build && npm run copy && node dist/express.js",
-    "build": "tsc",
-    "copy": "cp src/*.html dist/"
+    "start": "npm run build && node dist/express.js",
+    "build": "tsc"
   },
   "dependencies": {
     "axios": "^1.7.9",

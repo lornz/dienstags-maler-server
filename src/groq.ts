@@ -2,12 +2,6 @@ import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: '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' });
 
-export async function main() {
-  const chatCompletion = await getGroqChatCompletion("");
-  // Print the completion returned by the LLM.
-  console.log(chatCompletion.choices[0]?.message?.content || "");
-}
-
 export async function getGroqChatCompletion(base64Image: string) {
   console.log('call croq please');
   return groq.chat.completions.create({
@@ -25,6 +19,6 @@ export async function getGroqChatCompletion(base64Image: string) {
               ],
           },
       ],
-      model: "llama-3.2-90b-vision-preview",
+      model: "llama-3.2-11b-vision-preview",
   });
 }
