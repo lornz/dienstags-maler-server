@@ -42,11 +42,11 @@ app.post('/submit-image', (req, res) => {
 });
 
 app.post('/new-session', async(req, res) => {
-    const { sesssionName, player } = req.body;
+    const { sessionName, player } = req.body;
 
     // Create new session or join existing one
-    console.log('create new session with name:', sesssionName, 'with player:', player);
-    const session = await createOrJoinSession(sesssionName, player);
+    console.log('create new session with name:', sessionName, 'with player:', player);
+    const session = await createOrJoinSession(sessionName, player);
     console.log('currentSession:', session);
 
     // Set task for player
