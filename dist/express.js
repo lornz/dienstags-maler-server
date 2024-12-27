@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const axios_1 = __importDefault(require("axios"));
 const groq_js_1 = require("./groq.js");
+const session_js_1 = require("./session.js");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000; // Use PORT from the environment or default to 3000
 let base64ImageDebug = '';
@@ -60,9 +61,11 @@ app.post('/submit-image', (req, res) => {
         res.status(400).send({ message: 'Name is required.' });
     }
 });
-app.post('new-session', (req, res) => {
-    console.log('new session');
-    const { sesssionName, guessWord } = req.body;
+app.post('/new-session', (req, res) => {
+    const { sesssionName, player } = req.body;
+    console.log('create new session with name:', sesssionName, 'with player:', player);
+    const session = (0, session_js_1.createOrJoinSession)(sesssionName, player);
+    axios_1.default.post('https://montagsmaler-multiplayer.onrender.com/set_task', { task: session.task });
 });
 // Catch-all route for unmatched requests
 app.use((req, res) => {

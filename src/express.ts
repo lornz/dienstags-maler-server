@@ -46,7 +46,7 @@ app.post('/new-session', (req, res) => {
     console.log('create new session with name:', sesssionName, 'with player:', player);
     const session = createOrJoinSession(sesssionName, player);
 
-    axios.post('https://montagsmaler-multiplayer.onrender.com/set_task', { task: session.task })
+    axios.post('https://montagsmaler-multiplayer.onrender.com/set_task', session.task )
 });
 
 // Catch-all route for unmatched requests
