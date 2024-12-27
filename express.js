@@ -1,9 +1,9 @@
-const express = require('express');
+import express, { json } from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000; // Use PORT from the environment or default to 3000
 
 // Middleware to parse JSON payloads
-app.use(express.json());
+app.use(json());
 
 // Endpoint to handle name submission
 app.post('/submit-name', (req, res) => {
