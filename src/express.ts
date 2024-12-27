@@ -1,5 +1,6 @@
 import express, { json } from 'express';
 import axios from 'axios';
+import path from 'path';
 import { getGroqChatCompletion } from './groq.js';
 const app = express();
 const PORT = process.env.PORT || 3000; // Use PORT from the environment or default to 3000
@@ -8,6 +9,11 @@ let base64ImageDebug = '';
 
 // Middleware to parse JSON payloads
 app.use(json());
+
+// Serve the preview.html file
+app.get('/preview', (req, res) => {
+    res.sendFile(path.join(__dirname, 'preview.html'));
+});
 
 // Endpoint to handle name submission
 app.post('/submit-image', (req, res) => {
