@@ -9,6 +9,7 @@ export async function main() {
 }
 
 export async function getGroqChatCompletion(base64Image) {
+  console.log('call croq please');
   return groq.chat.completions.create({
     messages: [
           {
