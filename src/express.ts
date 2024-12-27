@@ -28,7 +28,7 @@ app.post('/submit-image', (req, res) => {
             console.log(content);
 
             // Post to https://montagsmaler-multiplayer.onrender.com/update_answer
-            axios.post('https://montagsmaler-multiplayer.onrender.com/update_answer', { content })
+            axios.post('https://montagsmaler-multiplayer.onrender.com/update_answer', { answer: content })
             .then(response => {
                 console.log('Posted to /update_answer:', response.data);
             })
@@ -47,6 +47,7 @@ app.post('/new-session', (req, res) => {
     // Create new session or join existing one
     console.log('create new session with name:', sesssionName, 'with player:', player);
     const session = createOrJoinSession(sesssionName, player);
+    console.log('currentSession:', session);
 
     // Set task for player
     axios.post('https://montagsmaler-multiplayer.onrender.com/set_task', { task: session.task} ).then(response => {
@@ -58,6 +59,7 @@ app.post('/new-session', (req, res) => {
 
     if (session.players?.length > 1) {
         console.log('Session is full. Starting game...');
+        // TODO: Send start game to all players
     }
 });
 
