@@ -17,6 +17,18 @@ app.post('/submit-name', (req, res) => {
     }
 });
 
+// Endpoint to handle name submission
+app.post('/submit-image', (req, res) => {
+    const { name, image } = req.body;
+
+    if (name) {
+        console.log(`Received name: ${name} and ${image}`);
+        res.status(200).send({ message: 'Name logged successfully!' });
+    } else {
+        res.status(400).send({ message: 'Name is required.' });
+    }
+});
+
 // Catch-all route for unmatched requests
 app.use((req, res) => {
     res.status(404).send({ message: 'Endpoint not found.' });
