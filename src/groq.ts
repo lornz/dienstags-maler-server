@@ -22,3 +22,20 @@ export async function getGroqChatCompletion(base64Image: string) {
       model: "llama-3.2-11b-vision-preview",
   });
 }
+
+export async function createTask() {
+  return groq.chat.completions.create({
+    messages: [
+        {
+          role: "system",
+          content: "You are the game master for a multiplayer game of draw and game",
+        },
+        // Set a user message for the assistant to respond to.
+        {
+          role: "user",
+          content: "Reply with a task for the other players to draw. Only reply with the task itself, no additional information. e.g. 'Draw a cat', 'Draw a house', etc.",
+        },
+      ],
+      model: "llama3-8b-8192",
+  });
+}

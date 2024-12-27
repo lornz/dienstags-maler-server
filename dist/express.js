@@ -22,6 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -48,12 +57,12 @@ app.post('/submit-image', (req, res) => {
             const content = (_b = (_a = chatCompletion.choices[0]) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.content;
             console.log(content);
             // Post to https://montagsmaler-multiplayer.onrender.com/update_answer
-            axios_1.default.post('https://montagsmaler-multiplayer.onrender.com/update_answer', { content })
+            axios_1.default.post('https://montagsmaler-multiplayer.onrender.com/update_answer', { answer: content })
                 .then(response => {
-                console.log('Posted to montagsmaler-multiplayer:', response.data);
+                console.log('Posted to /update_answer:', response.data);
             })
                 .catch(error => {
-                console.error('Error posting to montagsmaler-multiplayer:', error);
+                console.error('Error posting to /update_answer:', error);
             });
         });
     }
@@ -61,12 +70,25 @@ app.post('/submit-image', (req, res) => {
         res.status(400).send({ message: 'Name is required.' });
     }
 });
-app.post('/new-session', (req, res) => {
+app.post('/new-session', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const { sesssionName, player } = req.body;
+    // Create new session or join existing one
     console.log('create new session with name:', sesssionName, 'with player:', player);
-    const session = (0, session_js_1.createOrJoinSession)(sesssionName, player);
-    axios_1.default.post('https://montagsmaler-multiplayer.onrender.com/set_task', { task: session.task });
-});
+    const session = yield (0, session_js_1.createOrJoinSession)(sesssionName, player);
+    console.log('currentSession:', session);
+    // Set task for player
+    axios_1.default.post('https://montagsmaler-multiplayer.onrender.com/set_task', { task: session.task }).then(response => {
+        console.log('Posted /set_task. Response:', response.data);
+    })
+        .catch(error => {
+        console.error('Error posting to /set_task:', error);
+    });
+    if (((_a = session.players) === null || _a === void 0 ? void 0 : _a.length) > 1) {
+        console.log('Session is full. Starting game...');
+        // TODO: Send start game to all players
+    }
+}));
 // Catch-all route for unmatched requests
 app.use((req, res) => {
     res.status(404).send({ message: 'Endpoint not found.' });
