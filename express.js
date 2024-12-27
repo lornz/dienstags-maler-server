@@ -18,7 +18,8 @@ app.post('/submit-image', (req, res) => {
 
         getGroqChatCompletion(image).then((chatCompletion) => {
             console.log('got completion');
-            console.log(chatCompletion.choices[0]?.message?.content);
+            const content = chatCompletion.choices[0]?.message?.content;
+            console.log(content);
 
             // Post to https://montagsmaler-multiplayer.onrender.com/update_answer
             axios.post('https://montagsmaler-multiplayer.onrender.com/update_answer', { content })
