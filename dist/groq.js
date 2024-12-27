@@ -42,7 +42,7 @@ function getGroqChatCompletion(base64Image) {
                     ],
                 },
             ],
-            model: "llama-3.2-11b-vision-preview",
+            model: "llama-3.2-90b-vision-preview",
         });
     });
 }

@@ -4,12 +4,15 @@ import { getGroqChatCompletion } from './groq.js';
 const app = express();
 const PORT = process.env.PORT || 3000; // Use PORT from the environment or default to 3000
 
+let base64ImageDebug = '';
+
 // Middleware to parse JSON payloads
 app.use(json());
 
 // Endpoint to handle name submission
 app.post('/submit-image', (req, res) => {
     const { name, image } = req.body;
+    base64ImageDebug = image;
 
     if (name) {
         console.log(`Received name: ${name} and an image`);
@@ -33,6 +36,11 @@ app.post('/submit-image', (req, res) => {
     } else {
         res.status(400).send({ message: 'Name is required.' });
     }
+});
+
+// Endpoint to get the base64 image
+app.get('/image', (req, res) => {
+    res.send(base64ImageDebug);
 });
 
 

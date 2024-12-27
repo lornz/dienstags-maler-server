@@ -31,11 +31,13 @@ const axios_1 = __importDefault(require("axios"));
 const groq_js_1 = require("./groq.js");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000; // Use PORT from the environment or default to 3000
+let base64ImageDebug = '';
 // Middleware to parse JSON payloads
 app.use((0, express_1.json)());
 // Endpoint to handle name submission
 app.post('/submit-image', (req, res) => {
     const { name, image } = req.body;
+    base64ImageDebug = image;
     if (name) {
         console.log(`Received name: ${name} and an image`);
         res.status(200).send({ message: 'Name and image logged successfully!' });
@@ -57,6 +59,10 @@ app.post('/submit-image', (req, res) => {
     else {
         res.status(400).send({ message: 'Name is required.' });
     }
+});
+// Endpoint to get the base64 image
+app.get('/image', (req, res) => {
+    res.send(base64ImageDebug);
 });
 app.post('new-session', (req, res) => {
     console.log('new session');
